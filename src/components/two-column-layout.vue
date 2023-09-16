@@ -11,10 +11,10 @@
         <ph-list v-else weight="bold" class="two-column-layout__sidebar__toggle" @click="toggleSidebar()" />
       </div>
       <div class="two-column-layout__sidebar__logo">
-        <img :src="$options.logo" alt="logo" class="two-column-layout__sidebar__logo--img"/>  
+        <img :src="logo" alt="logo" class="two-column-layout__sidebar__logo--img"/>  
       </div>
       <ul>
-        <li v-for="(option, index) in $options.navOptions"
+        <li v-for="(option, index) in options"
             :key="index">
           <a :href="option.path">
             <component :is="option.icon" />
@@ -31,8 +31,7 @@
 </template>
 
 <script>
-  import logo from '@/assets/logo.png';
-  import { PhHouse, PhQuestion, PhGear, PhSignOut, PhX, PhList, PhChartLineUp } from 'phosphor-vue';
+  import { PhX, PhList, PhChartLineUp } from 'phosphor-vue';
 
   export default {
     name: "two-column-layout",
@@ -41,6 +40,16 @@
       return {
         selectedPath: null,
         isActive: true,
+      }
+    },
+    props: {
+      logo: {
+        type: String,
+        required: true,
+      },
+      options: {
+        type: Array,
+        default: () => []
       }
     },
     computed: {
@@ -70,29 +79,6 @@
     watch: {
       '$route.path': 'updateSelectedPath'
     },
-    logo,
-    navOptions: [
-      {
-        name: 'Home',
-        path: '/',
-        icon: PhHouse,
-      },
-      {
-        name: 'About',
-        path: '/about',
-        icon: PhQuestion,
-      },
-      {
-        name: 'Settings',
-        path: '/settings',
-        icon: PhGear,
-      },
-      {
-        name: 'Logout',
-        path: '',
-        icon: PhSignOut,
-      },
-    ]
   }
 </script>
 
